@@ -11,13 +11,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.androiddaggerexample.presentation.viewmodel.BeveragesViewModel
+import com.example.androiddaggerexample.presentation.viewmodel.BeveragesViewModelFactory
 import com.example.androiddaggerexample.ui.theme.AndroidDaggerExampleTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject lateinit var factory: BeveragesViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val beveragesViewModel: BeveragesViewModel by viewModels { factory }
+        beveragesViewModel.getPopularBeverages()
             setContent {
             AndroidDaggerExampleTheme {
                 // A surface container using the 'background' color from the theme
